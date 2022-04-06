@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import styles from "./styles.module.css";
+import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
   const [data, setData] = useState({
@@ -10,7 +11,7 @@ const Signup = () => {
   });
   const [error, setError] = useState("");
   const [msg, setMsg] = useState("");
-
+  let navigate = useNavigate();
   const handleChange = ({ currentTarget: input }) => {
     setData({ ...data, [input.name]: input.value });
   };
@@ -18,9 +19,12 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const url = "http://localhost:8080/user/signup";
+      const url = "https://secure-springs-70577.herokuapp.com/user/signup";
       const { data: res } = await axios.post(url, data);
       setMsg(res.message);
+      if (res.status === 201) {
+        navigate("/login");
+      }
     } catch (error) {
       if (
         error.response &&
@@ -46,24 +50,6 @@ const Signup = () => {
         <div className={styles.right}>
           <form className={styles.form_container} onSubmit={handleSubmit}>
             <h1>Create Account</h1>
-            {/* <input
-							type="text"
-							placeholder="First Name"
-							name="firstName"
-							onChange={handleChange}
-							value={data.firstName}
-							required
-							className={styles.input}
-						/>
-						<input
-							type="text"
-							placeholder="Last Name"
-							name="lastName"
-							onChange={handleChange}
-							value={data.lastName}
-							required
-							className={styles.input}
-						/> */}
             <input
               type="email"
               placeholder="Email"

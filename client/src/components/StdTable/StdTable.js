@@ -6,7 +6,7 @@ import { CsvBuilder } from "filefy";
 import SaveAltIcon from "@material-ui/icons/SaveAlt";
 
 const StdTable = () => {
-  const url = "http://localhost:8080/student/getAll";
+  const url = "https://secure-springs-70577.herokuapp.com/student/getAll";
   const [data, setData] = useState([]);
   const [filter, setFilter] = useState(true);
   const [selectedRows, setSelectedRows] = useState([]);
@@ -122,7 +122,7 @@ const StdTable = () => {
           onRowAdd: (newData) =>
             new Promise((resolve, reject) => {
               //Backend call
-              fetch("http://localhost:8080/student/add", {
+              fetch("https://secure-springs-70577.herokuapp.com/student/add", {
                 method: "POST",
                 headers: {
                   "Content-type": "application/json",
@@ -138,13 +138,17 @@ const StdTable = () => {
           onRowUpdate: (newData, oldData) =>
             new Promise((resolve, reject) => {
               //Backend call
-              fetch("http://localhost:8080/student/" + oldData._id, {
-                method: "PUT",
-                headers: {
-                  "Content-type": "application/json",
-                },
-                body: JSON.stringify(newData),
-              })
+              fetch(
+                "https://secure-springs-70577.herokuapp.com/student/" +
+                  oldData._id,
+                {
+                  method: "PUT",
+                  headers: {
+                    "Content-type": "application/json",
+                  },
+                  body: JSON.stringify(newData),
+                }
+              )
                 .then((resp) => resp.json())
                 .then((resp) => {
                   getStudents();
@@ -154,12 +158,16 @@ const StdTable = () => {
           onRowDelete: (oldData) =>
             new Promise((resolve, reject) => {
               //Backend call
-              fetch("http://localhost:8080/student/" + oldData._id, {
-                method: "DELETE",
-                headers: {
-                  "Content-type": "application/json",
-                },
-              })
+              fetch(
+                "https://secure-springs-70577.herokuapp.com/student/" +
+                  oldData._id,
+                {
+                  method: "DELETE",
+                  headers: {
+                    "Content-type": "application/json",
+                  },
+                }
+              )
                 .then((resp) => resp.json())
                 .then((resp) => {
                   getStudents();

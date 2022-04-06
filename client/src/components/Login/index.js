@@ -14,7 +14,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const url = "http://localhost:8080/user/signin";
+      const url = "https://secure-springs-70577.herokuapp.com/user/signin";
       const { data: res } = await axios.post(url, data);
       localStorage.setItem("token", res.data);
       window.location = "/";
